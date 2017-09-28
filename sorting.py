@@ -113,15 +113,38 @@ def mergeSort(alist):
 			k = k+1
 	# print("Merging", alist)
 
-def quickSort(alist):
-	pass
+def partition(alist, l, r):
+	# l = 0
+	# high = len(alist)-1
+	# print(high)
+	pivot = alist[r]
+	i = l-1
 
+	for j in range(l,r):
+		# print("j= ",j)
+		if alist[j] <= pivot:
+			i = i +1
+			# print("i = ",i)
+			alist[j], alist[i] = alist[i], alist[j]
+		# print(alist)
+
+	alist[i+1], alist[r] = alist[r], alist[i+1]
+	return i+1
+	# print(alist)
+
+def quickSort(alist, p, q):
+	if p < q:
+		m = partition(alist, 0, len(alist)-1)
+		quickSort(alist, p, m-1)
+		quickSort(alist, m+1, q)
+	
 
 
 if __name__ == '__main__':
 	# UnalistList = input("Give an unalist list: ")
-	alist = [54, 26, 93, 17, 77, 31, 44, 55, 20, 11] #,14,32,6,9,24,82
+	alist = [10, 80, 30, 90, 40, 50, 70] #,14,32,6,9,24,82
 	listLen = len(alist)
+	print("\nInitial List: ", alist)
 
 	# insertionSort(alist)
 	# print("Insertion Sort",
@@ -133,7 +156,7 @@ if __name__ == '__main__':
 	# 	"\nLength: ", listLen,
 	# 	"\nSorted List: ", alist)
 
-	quickSort(alist)
+	quickSort(alist, 0, len(alist)-1)
 	print("\nSorted List: ", alist)
 
 
