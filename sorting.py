@@ -112,37 +112,86 @@ def mergeSort(alist):
 			i = i+1
 			k = k+1
 	# print("Merging", alist)
+def mergeSort3(alist):
+	# print("Splitting ",alist)
+	if len(alist) > 1:
+		onethird = len(alist)//3
+		print(onethird)
+		left = alist[0:onethird]
+		mid = alist[onethird:onethird*2]
+		right = alist[onethird*2:len(alist)]
+		# print(left,'\n',right)
 
-def partition(alist, l, r):
-	# l = 0
-	# high = len(alist)-1
-	# print(high)
-	pivot = alist[r]
-	i = l-1
+		mergeSort(left)
+		mergeSort(mid)
+		mergeSort(right)
 
-	for j in range(l,r):
-		# print("j= ",j)
+		l, m, r, k= 0, 0, 0, 0
+		while l < len(left) and m < len(mid) and r < len(right):
+			if left[l] < min(mid[m], right[r]):
+				alist[k] = left[l]
+				l = l+1
+			elif right[r] < min(mid[m], left[l]):
+				alist[k] = right[r]
+				r = r+1
+			else:
+				alist[k] = mid[m]
+				m = m+1
+			k = k+1
+		
+		while r < len(right):
+			alist[k] = right[r]
+			r = r +1
+			k = k+1
+
+		while m < len(mid):
+			alist[k] = mid[m]
+			m = m+1
+			k = k+1
+
+		while l < len(left):
+			alist[k] = left[l]
+			l = l+1
+			k = k+1
+	# print("Merging", alist)
+
+def quickSort_init(alist):
+	low = 0
+	high = len(alist) - 1
+	quickSort(alist, low, high)
+
+
+def quickSort(alist, low, high):
+	if low < high:
+		border = partition(alist, low, high)
+		quickSort(alist, low, border-1)
+		quickSort(alist, border+1, high)
+
+def partition(alist, low, high):
+	pivot = alist[high]
+	i = low-1
+
+	for j in range(low,high):
+		print("j= ",j)
 		if alist[j] <= pivot:
 			i = i +1
-			# print("i = ",i)
+			print("i = ",i)
 			alist[j], alist[i] = alist[i], alist[j]
-		# print(alist)
+			print(alist)
 
-	alist[i+1], alist[r] = alist[r], alist[i+1]
+	alist[i+1], alist[high] = alist[high], alist[i+1]
 	return i+1
-	# print(alist)
+	print(alist)
 
-def quickSort(alist, p, q):
-	if p < q:
-		m = partition(alist, 0, len(alist)-1)
-		quickSort(alist, p, m-1)
-		quickSort(alist, m+1, q)
+
+
+
 	
 
 
 if __name__ == '__main__':
 	# UnalistList = input("Give an unalist list: ")
-	alist = [10, 80, 30, 90, 40, 50, 70] #,14,32,6,9,24,82
+	alist = [8,9,7,2,5,4,1,3,6,4] #,14,32,6,9,24,82
 	listLen = len(alist)
 	print("\nInitial List: ", alist)
 
@@ -156,7 +205,12 @@ if __name__ == '__main__':
 	# 	"\nLength: ", listLen,
 	# 	"\nSorted List: ", alist)
 
-	quickSort(alist, 0, len(alist)-1)
-	print("\nSorted List: ", alist)
+	mergeSort3(alist)
+	print("Merge Sort (split N/3)",
+		"\nLength: ", listLen,
+		"\nSorted List: ", alist)
+
+	# quickSort_init(alist)
+	# print("\nSorted List: ", alist)
 
 
